@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit a Song!</title>
+  </head>
+  <body>
+    <h1> Edit a Song! </h1>
+
+      <form method="post" action="/songs/<%= @song.slug %>">
+      <input type="hidden" name="_method" value="patch">
+      <label>Name:
+      <input id="Name" type="text" name="song[name]" value="<%=@song.name%>"></label>
+      <input id="Artist Name" type="text" name="artist[name]">
+
+      <% Artist.all.each do |artist| %>
+      <input id="<%=artist.name %>" type="radio" name="song[artist_id]" value="<%= artist.id %>" <%="checked" if @song.artist == artist %>/></label>
+      <% end %>
+
+
+      <%Genre.all.each do |genre|%>
+      <input id="<%= genre.name %>" type="checkbox" name="song[genre_ids][]" value="<%= genre.id %>" id="<%= genre.id %>" <%="checked" if @song.genres.include?(genre)%></input>
+      <% end %>
+      <input id="Genre Name" type="text" name="genre[name]"></label>
+      <input type="submit" id="Save">
+    </form>
+
+  </body>
+</html>
